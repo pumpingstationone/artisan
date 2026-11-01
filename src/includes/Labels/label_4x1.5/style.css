@@ -1,0 +1,18 @@
+@page {
+    width: 101.6mm;
+    height: 38.1mm;
+}
+
+.datamatrix {
+    height: 17mm;
+    margin-left: 3mm;
+    margin-top: 3mm;
+}
+
+.label {
+    font-family: Arial, Verdana, Helvetica, sans;
+    font-weight: bold;
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 14px;
+}

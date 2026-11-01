@@ -51,6 +51,7 @@ from artisanlib.widgets import (MyQComboBox, ClickableQLabel, ClickableTextEdit,
     ArtisanPlainTextEdit, RoastsComboBox, ArtisanMinorPushButton, ArtisanQTabWidget, StockComboBox)
 from artisanlib.styles import (artisan_push_button_style, tool_button_icon_style, combobox_style, line_edit_style, artisan_dialog_button_style,
     artisan_minor_push_button_style, spin_box_style, table_style, horizontal_header_style, vertical_header_style)
+from artisanlib.label import ArtisanLabelWriter
 
 # import artisan.plus modules
 import plus.config  # @UnusedImport
@@ -1261,6 +1262,16 @@ class editGraphDlg(ArtisanResizeablDialog):
         self.dialogbuttons.accepted.connect(self.close_OK)
         self.dialogbuttons.rejected.connect(self.closeEvent)
 
+        # add Print and Save button
+        self.printButton = self.dialogbuttons.addButton(
+            "Print+Ok",
+            QDialogButtonBox.ButtonRole.ActionRole
+        )
+
+        if (self.printButton is not None):
+            self.printButton.clicked.connect(self.onPrintButtonClicked)
+        
+
         # container tare
         self.tareComboBox = QComboBox()
         self.tareComboBox.setToolTip(QApplication.translate('Tooltip', 'container selector'))
@@ -1982,6 +1993,12 @@ class editGraphDlg(ArtisanResizeablDialog):
     def scale_weight_changed(self, w:int) -> None:
         self.scale_weight = w
         self.update_scale_weight()
+
+    @pyqtSlot()
+    def onPrintButtonClicked(self) -> None:
+        writer = ArtisanLabelWriter("", "label_4x1.5")
+        writer.generate_label(self)
+        self.close_OK()
 
     def update_scale_weight(self) -> None:
         tare:float = 0
